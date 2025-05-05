@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <title>Dogs</title>
+        <link rel="stylesheet" href="assignment2.css">
+        <script src="Dogsjs.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-slider/1.0.0/simpleslider.min.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+            <script>
+           var changeColor = function(tag) {
+                    document.body.style.backgroundColor = tag;
+                
+                }
+
+            
+                var changePage = function(tag2) {
+                    console.log(tag2)
+                    if (tag2 =='home') [
+                        window.location.href="HomePage.html"
+                    ]
+
+                    else if (tag2 == "stocks") {
+                        window.location.href="Stocks.html"
+                    }
+
+                    //else {
+                    //    window.location.href="Stocks.html"
+                  //  }  
+                
+                }
+
+                var changeBreed = function(tag3) {
+                    console.log(tag3)
+                    fetch('https://dogapi.dog/api/v2/breeds')
+                    .then(result => result.json())
+                    .then(resultJson => {
+                        resultJson.data.forEach(resultObject => {
+                        if (resultObject.attributes['name'] == tag3) {
+                            const breedContainer = document.createElement("div");
+                            breedContainer.id = "breedContainerID"
+                            if (document.contains(document.getElementById("breedContainerID"))) {
+                            document.getElementById("breedContainerID").remove();
+            }
+                            
+                            
+                        
+                            //breedContainer.innerHTML= resultObject.attributes['description'] + resultObject.attributes['name']
+                            breedContainer.innerHTML= `Name: ${resultObject.attributes['name']} <br> Description: ${resultObject.attributes['description']} <br> Min Life: ${resultObject.attributes.life["min"]} <br> Max Life: ${resultObject.attributes.life["max"]}` 
+                            
+                            //document.getElementById('breedContainerID').display = 'none';
+                            //document.body.removeChild(breedContainer);
+                        // document.body.appendChild(breedContainer);
+                            //document.body.removeChild(breedContainer);
+                           // document.body.appendChild(breedContainer);
+
+                           document.getElementById("main-container").appendChild(breedContainer)
+                            
+                        }
+                    })
+                
+                    
+                    })
+
+                }
+
+
+
+                
+
+
+                if (annyang) {
+                    // Let's define a command.
+                    const commands = {
+                        'change color to *tag': changeColor,
+                        'Go to *tag2': changePage,
+                        'look up *tag3': changeBreed,
+                        'hello': () => { alert('Hello world!'); }
+  
+                    };
+
+                    
+
+                    // Add our commands to annyang
+                    annyang.addCommands(commands);
+
+                    // Start listening.
+                    annyang.start();
+                    }
+
+
+                    
+            </script>
+    </head>
+
+    <body id=dogPageBody>
+
+        <header id="headerfooter">
+            <h1>Dogs</h1>
+        </header>
+
+
+        <!-- NAV Section -->
+    <nav id = "main-nav">
+        <ul><a href="HomePage.html">Home</a></ul> 
+        <ul><a href="Stocks.html">Stocks</a></ul>
+        <ul><a href="Dogs.html">Dogs</a></ul>
+    </nav>
+
+    <h2>Doggos!</h2>
+
+    
+
+   
+   
+    <div id = main-container>
+        <div id="loadingTheDogs" style="width:612px; height:612px" data-simple-slider>        
+        </div>
+        <div id="loadingTheBreeds">        
+        </div>
+
+        
+
+    </div>
+    
+    <div id="instructionsContainerID">
+        <h2>In this web page, there are option to Navigate using Audio</h2>
+        <p>Ensure your Mic is enabaled to be able to use this feature </p>
+        <ul>
+            <li>Load Dog Breed</li>
+            <ul>
+                <li>Say: Look up "Dog Breed Name"</li>
+              </ul>
+            <li>Navigate to a Different Page</li>
+            <ul>
+                <li>Say: Go to "page"</li>
+              </ul>
+            
+            <li>Change the Page Color
+              <ul>
+                <li>Say: Change Color to "color"</li>
+              </ul>
+            </li>
+            
+            <li>Say Hello Back to you!
+                <ul>
+                    <li>Say: Hello</li>
+                </ul>
+            </li>
+          </ul>
+          <button onclick="loadAudioOnButton()"> Audio On</button>
+          <button onclick="loadAudioOffbutton()"> Audio Off</button>
+
+        
+
+    </div>
+    
+
+        
+    </body>
+
+
+</html>
+

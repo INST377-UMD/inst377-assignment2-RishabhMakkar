@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href="assignment2.css">
+        <script defer src="HomePagejs.js"></script>
+
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+            <script>
+            var changeColor = function(tag) {
+                    document.body.style.backgroundColor = tag;
+                
+                }
+
+            var changePage = function(tag2) {
+                if (tag2 =='stocks') [
+                    window.location.href="Stocks.html"
+                ]
+
+                else if (tag2 == "dogs") {
+                    window.location.href="Dogs.html"
+                }
+
+                //else {
+                //    window.location.href="Stocks.html"
+                //  }  
+            
+            }
+
+                if (annyang) {
+                    // Let's define a command.
+                    const commands = {
+                        'change color to *tag': changeColor,
+                        'Go to *tag2': changePage,
+                        'Hello': () => { alert('Hello world!'); }
+  
+                    };
+
+                    // Add our commands to annyang
+                    annyang.addCommands(commands);
+
+                    // Start listening.
+                   
+                    
+                    }
+            </script>
+    </head>
+
+    <body id=homePageBody>
+
+        <header id="headerfooter">
+            <h1>Home Page</h1>
+        </header>
+
+
+        <!-- NAV Section -->
+    <h1>INST377- Activities</h1>
+    <nav id = "main-nav">
+        <ul><a href="HomePage.html">Home</a></ul> 
+        <ul><a href="Stocks.html">Stocks</a></ul>
+        <ul><a href="Dogs.html">Dogs</a></ul>
+    </nav>
+
+    <h2>Theses are some different activities we can try</h2>
+    
+    <div class = "button-container">
+        <div>
+            <button class="button-49" onclick="document.location='Stocks.html'" role="button">Stocks</button>
+        </div>
+        <div>
+            <button class="button-49" onclick="document.location='Dogs.html'" role="button">Dogs</button>
+        </div>        
+    </div>
+        
+    <div class = "quoteBox">
+            <h2>Quote of the day</h2>
+            <p id=insertQuote> </p>
+            <p id="insertAuthor"> </p>
+    </div>
+
+    <div id="instructionsContainerID">
+        <h2>In this web page, there are option to Navigate using Audio</h2>
+        <p>Ensure your Mic is enabaled to be able to use this feature </p>
+        <ul>
+            <li>Navigate to a Different Page</li>
+            <ul>
+                <li>Say: Go to "page"</li>
+              </ul>
+            
+            <li>Change the Page Color
+              <ul>
+                <li>Say: Change Color to "color"</li>
+              </ul>
+            </li>
+            
+            <li>Say Hello Back to you!
+                <ul>
+                    <li>Say: Hello</li>
+                </ul>
+            </li>
+          </ul>
+          <button onclick="loadAudioOnButton()"> Audio On</button>
+        <button onclick="loadAudioOffbutton()"> Audio Off</button>
+        
+
+
+    </div>
+
+        
+    </body>
+
+</html>
