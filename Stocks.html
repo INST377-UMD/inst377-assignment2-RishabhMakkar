@@ -1,0 +1,188 @@
+<html>
+    <head>
+        <title>Stocks</title>
+        <link rel="stylesheet" href="assignment2.css">
+        <script defer src="Stocksjs.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+            <script>
+                let myChart;
+                var makeChart = function (tag3) {
+                    let tagUpper = tag3.toUpperCase();
+                    const d = new Date();
+                   // const userSelectedTicker = document.getElementById('enterTicker').value;
+                    d_miliseconds = d.getTime()
+                    test = d.setDate(d.getDate() - 30);
+                    console.log(test)
+
+                    const stockPricesCharts = [];
+                    const dateChartArray = [];
+
+                    
+                    fetch(`https://api.polygon.io/v2/aggs/ticker/${tagUpper}/range/1/day/${test}/${d_miliseconds}?adjusted=true&sort=asc&limit=120&apiKey=2ry8prtnX3BWXpmtFeP_AOJwSqB3QDfn`)
+                    .then(result => result.json())
+                    .then(resultJson => {
+                    console.log(resultJson)
+
+                    console.log(resultJson.results)
+                    resultJson.results.forEach(resultObject=> {
+                        //console.log(resultObject['c'])
+                        stockPricesCharts.push(resultObject['c'])
+                        //console.log(resultObject['t'])
+
+                    var dateForChart = new Date(resultObject['t']);
+                    //console.log(dateForChart)
+                    //console.log(dateForChart.toGMTString())
+                    dateChartArray.push(dateForChart.toGMTString())
+                    });
+                console.log(stockPricesCharts)
+                console.log(dateChartArray)
+
+                const ctx = document.getElementById('myChart');
+                if (myChart) {
+                    myChart.destroy()
+                } 
+                myChart = new Chart(ctx, {
+                    
+                    type: 'line',
+                    data: {
+                    labels: dateChartArray,
+                    datasets: [{
+                        label: 'Stock Price',
+                        data: stockPricesCharts,
+                        
+                    }]
+                    },
+                });
+
+                })
+
+
+
+                }
+                var changeColor = function(tag) {
+                    console.log(tag)
+                    document.body.style.backgroundColor = tag;
+                
+                }
+
+                var changePage = function(tag2) {
+                    if (tag2 =='home') [
+                        window.location.href="HomePage.html"
+                    ]
+
+                    else if (tag2 == "dogs") {
+                        window.location.href="Dogs.html"
+                    }
+
+                    //else {
+                    //    window.location.href="Stocks.html"
+                  //  }  
+                
+                }
+
+                
+
+                if (annyang) {
+                    // Let's define a command.
+                    const commands = {
+                        'change color to *tag': changeColor,
+                        'look up *tag3': makeChart,
+                        'Go to *tag2': changePage,
+                        'hello': () => { alert('Hello world!'); }
+                    };
+
+                    // Add our commands to annyang
+                    annyang.addCommands(commands);
+
+                    // Start listening.
+                    annyang.start();
+                    }
+            </script>
+    </head>
+
+    <body id=stockPageBody>
+
+        <header id="headerfooter">
+            <h1>Stocks</h1>
+        </header>
+
+
+        <!-- NAV Section -->
+    <nav id = "main-nav">
+        <ul><a href="HomePage.html">Home</a></ul> 
+        <ul><a href="Stocks.html">Stocks</a></ul>
+        <ul><a href="Dogs.html">Dogs</a></ul>
+    </nav>
+
+    <h2>Let's chart some stocks </h2>
+
+    <form name="tickerForm" id="tickerForm" onsubmit="getTicker(); return false";>
+        <input type="text" maxlength="5" id = "enterTicker" required>
+        <br>
+        <select id = "selectDays">
+            <option value="30 days">30 days</option>
+            <option value="60 days">60 days</option>
+            <option value="90 days">90 days</option>
+        </select>
+        <br>
+        <input type="submit" value="Lookup">
+    </form>
+
+    <div>
+        <canvas id="myChart"></canvas>
+      </div>
+
+
+      <table id="stocksTable">
+        <tr>
+             <th id-="appearTicker"></th>
+             <th id="appearComments"></th> 
+             <th id="appearSentiment"></th> 
+             <th id="appearImage"></th> 
+            
+
+        </tr>
+    </table>
+
+    <div id="instructionsContainerID">
+        <h2>In this web page, there are option to Navigate using Audio</h2>
+        <p>Ensure your Mic is enabaled to be able to use this feature </p>
+        <ul>
+            <ul>
+                <li>Lookup Stock</li>
+                <ul>
+                    <li>Say: Look up "Stock Ticker"</li>
+                  </ul>
+            <li>Navigate to a Different Page</li>
+            <ul>
+                <li>Say: Go to "page"</li>
+              </ul>
+            
+            <li>Change the Page Color
+              <ul>
+                <li>Say: Change Color to "color"</li>
+              </ul>
+            </li>
+            
+            <li>Say Hello Back to you!
+                <ul>
+                    <li>Say: Hello</li>
+                </ul> 
+            </li>
+          </ul>
+          <button onclick="loadAudioOnButton()"> Audio On</button>
+        <button onclick="loadAudioOffbutton()"> Audio Off</button>
+
+
+    </div>
+
+
+        
+    </body>
+
+
+</html>
+
+
